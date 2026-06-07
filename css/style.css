@@ -1,0 +1,804 @@
+/* =============================================================
+   SUMMER BBQ 2026 — 共通スタイル
+   A案(縦字)・B案(横字)で共有。差分は body.variant-a / .variant-b
+   ============================================================= */
+
+/* ---------- デザイントークン ---------- */
+:root {
+  --sky-deep: #1f6fd4;
+  --sky: #3f8fe0;
+  --sky-light: #a9d6f5;
+  --sky-pale: #eaf6ff;
+  --cloud: #ffffff;
+  --ink: #14304d;          /* 文字色（濃紺） */
+  --ink-soft: #41607d;
+  --accent: #ff7a3d;       /* 夕日オレンジ（CTA） */
+  --accent-deep: #f15f25;
+
+  --font-jp: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-en: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Zen Kaku Gothic New", system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+
+  --space-section: clamp(5rem, 12vh, 9rem);
+  --maxw: 1100px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- リセット ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--sky-pale);
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- 共通レイアウト ---------- */
+.container {
+  width: min(92%, var(--maxw));
+  margin-inline: auto;
+}
+
+.eyebrow {
+  font-family: var(--font-en);
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin: 0 0 1rem;
+}
+
+/* ---------- ヘッダー ---------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1rem, 2.5vw, 1.6rem) clamp(1.2rem, 4vw, 3rem);
+  color: var(--cloud);
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease),
+              box-shadow 0.4s var(--ease);
+}
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  box-shadow: 0 2px 20px rgba(20, 48, 77, 0.12);
+}
+.site-header__logo {
+  font-family: var(--font-en);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+.site-header__logo small {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  opacity: 0.85;
+}
+
+/* ---------- ボタン ---------- */
+.btn {
+  --btn-pad-y: 0.85em;
+  --btn-pad-x: 1.8em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.4vw, 0.98rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(241, 95, 37, 0.35);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.btn:hover,
+.btn:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(241, 95, 37, 0.45);
+}
+.btn--header { --btn-pad-y: 0.7em; --btn-pad-x: 1.4em; }
+.btn--lg { --btn-pad-y: 1.1em; --btn-pad-x: 2.6em; font-size: clamp(1rem, 1.8vw, 1.2rem); }
+.btn__arrow { transition: transform 0.3s var(--ease); }
+.btn:hover .btn__arrow { transform: translateX(4px); }
+
+/* =============================================================
+   ヒーロー（フルスクリーン）
+   ============================================================= */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--cloud);
+  overflow: hidden;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.hero::after { /* 文字を読みやすくするグラデーション */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(20, 48, 77, 0.28) 0%, rgba(20, 48, 77, 0) 35%, rgba(20, 48, 77, 0.35) 100%);
+  z-index: -1;
+}
+.hero__inner { padding: 6rem 1.2rem 4rem; }
+.hero__group {
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 1.6vw, 0.92rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  margin: 0 0 1rem;
+  opacity: 0.92;
+  text-shadow: 0 2px 12px rgba(20, 48, 77, 0.45);
+}
+.hero__en {
+  font-family: var(--font-en);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem;
+  text-shadow: 0 2px 12px rgba(20, 48, 77, 0.4);
+}
+.hero__title {
+  font-family: var(--font-jp);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 8vw, 5.5rem);
+  line-height: 1.25;
+  margin: 0;
+  text-shadow: 0 4px 24px rgba(20, 48, 77, 0.4);
+}
+.hero__sub {
+  font-family: var(--font-en);
+  font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+  letter-spacing: 0.18em;
+  margin: 1.6rem 0 0;
+  opacity: 0.95;
+}
+/* スクロール誘導 */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  translate: -50% 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--cloud);
+  z-index: 1;
+}
+.scroll-hint__line {
+  width: 1px;
+  height: 48px;
+  background: currentColor;
+  transform-origin: top;
+  animation: scrollLine 2s var(--ease) infinite;
+}
+@keyframes scrollLine {
+  0% { transform: scaleY(0); opacity: 0; }
+  40% { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1) translateY(48px); opacity: 0; }
+}
+
+/* =============================================================
+   コンセプト
+   ============================================================= */
+.concept {
+  padding-block: var(--space-section);
+  text-align: center;
+  background:
+    radial-gradient(120% 80% at 50% 0%, #ffffff 0%, var(--sky-pale) 60%);
+}
+.concept__copy {
+  font-family: var(--font-jp);
+  font-size: clamp(1.4rem, 3.4vw, 2.4rem);
+  line-height: 2.1;
+  margin: 0 auto;
+  max-width: 22em;
+}
+.concept__lead {
+  margin: 2rem auto 0;
+  max-width: 34em;
+  color: var(--ink-soft);
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+}
+
+/* 住所・アクセス文は hero__meta のグループ名と同じ文字サイズに揃える */
+.concept__access {
+  font-size: clamp(0.72rem, 1.6vw, 0.92rem);
+}
+
+/* =============================================================
+   ギャラリー（sticky フルスクリーン・2画面分スクロール）
+   各 .gallery-panel は 200vh の高さを持ち、内部の固定背景が
+   2画面分のスクロールの間ずっと見えつづける。
+   ============================================================= */
+.gallery-panel {
+  position: relative;
+  height: 200vh;            /* ← 2画面分 */
+}
+.gallery-panel__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.gallery-panel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55%;  /* 乾杯する人たちを中心に（上に入道雲、下にBBQ） */
+  z-index: -2;
+}
+.gallery-panel__sticky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 48, 77, 0.22);
+  z-index: -1;
+}
+.gallery-panel__caption {
+  color: var(--cloud);
+  text-align: center;
+  padding: 1.5rem;
+  max-width: 24em;
+}
+.gallery-panel__caption .en {
+  font-family: var(--font-en);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: clamp(0.8rem, 1.4vw, 1rem);
+  display: block;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 12px rgba(20, 48, 77, 0.5);
+}
+.gallery-panel__caption .jp {
+  font-family: var(--font-jp);
+  font-size: clamp(1.6rem, 4.5vw, 3rem);
+  line-height: 1.5;
+  text-shadow: 0 4px 20px rgba(20, 48, 77, 0.5);
+}
+
+/* =============================================================
+   開催詳細
+   ============================================================= */
+.details {
+  padding-block: var(--space-section);
+  background: linear-gradient(180deg, #ffffff, var(--sky-pale));
+}
+.details__head { text-align: center; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.details__title {
+  font-family: var(--font-jp);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin: 0;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1rem, 3vw, 1.8rem);
+}
+.info-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(1.6rem, 3vw, 2.2rem);
+  box-shadow: 0 12px 30px rgba(20, 48, 77, 0.08);
+  border: 1px solid rgba(63, 143, 224, 0.12);
+}
+.info-card__label {
+  font-family: var(--font-en);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--accent-deep);
+  margin: 0 0 0.6rem;
+}
+.info-card__value {
+  font-family: var(--font-jp);
+  font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+  margin: 0;
+  line-height: 1.5;
+}
+.info-card__note {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 0.5rem;
+  letter-spacing: 0.04em;
+}
+.info-card__value a { color: var(--sky-deep); border-bottom: 1px solid currentColor; }
+/* 費用カードの男女別 */
+.fee-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.4rem; }
+.fee-list li { display: flex; justify-content: space-between; align-items: baseline; }
+.fee-list .fee { font-family: var(--font-en); font-size: 1.4rem; color: var(--ink); }
+.tag-pending {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-deep);
+  background: rgba(255, 122, 61, 0.12);
+  border-radius: 999px;
+  padding: 0.15em 0.8em;
+  margin-left: 0.5em;
+  vertical-align: middle;
+}
+
+/* =============================================================
+   CTA / フッター（最下部中央に申込ボタン）
+   ============================================================= */
+.cta {
+  position: relative;
+  text-align: center;
+  color: var(--cloud);
+  padding-block: clamp(5rem, 14vh, 9rem);
+  overflow: hidden;
+  background: linear-gradient(160deg, var(--sky-deep), var(--sky));
+}
+.cta::before { /* 雲のうっすらした装飾 */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40% 30% at 20% 30%, rgba(255,255,255,0.25), transparent 70%),
+    radial-gradient(45% 35% at 85% 70%, rgba(255,255,255,0.2), transparent 70%);
+  pointer-events: none;
+}
+.cta__title {
+  font-family: var(--font-jp);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin: 0 0 0.6rem;
+  text-shadow: 0 4px 20px rgba(20, 48, 77, 0.3);
+}
+.cta__lead {
+  font-family: var(--font-en);
+  letter-spacing: 0.2em;
+  opacity: 0.95;
+  margin: 0 0 2.5rem;
+}
+.site-footer {
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 2.4rem 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+}
+.site-footer__logo {
+  font-family: var(--font-en);
+  letter-spacing: 0.24em;
+  color: #fff;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+.site-footer__group {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.18em;
+  margin-bottom: 0.4rem;
+}
+
+/* =============================================================
+   スクロール・リビール（IntersectionObserver で .is-visible 付与）
+   全ブラウザ対応・依存ゼロ。フェード＋少し上にスライド。
+   ============================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* =============================================================
+   A案：縦字コピーライト（差分のみ）
+   ============================================================= */
+body.variant-a .hero__title,
+body.variant-a .concept__copy,
+body.variant-a .gallery-panel__caption .jp,
+body.variant-a .cta__title {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+body.variant-a .hero__title { max-height: 62vh; }
+body.variant-a .concept__copy { max-height: 60vh; }
+body.variant-a .gallery-panel__caption .jp { max-height: 60vh; }
+/* 縦書き見出しの上の英字は横のまま、間隔を調整 */
+body.variant-a .hero__en { margin-bottom: 2rem; }
+body.variant-a .gallery-panel__caption .en { margin-bottom: 1.4rem; }
+
+/* =============================================================
+   C案：ヒーローのみ縦字（右寄せ）／他セクションは横字
+   開催概要は一部を各セクションに散らす（日時→ヒーロー・場所→コンセプト）
+   ============================================================= */
+/* --- 全体背景：入道雲を固定背景として敷く ---
+   hero / concept / gallery は各自の不透明背景がこの上に乗る（別画像をかぶせる）。
+   CTA(Join us) だけは背景を透過させ、この入道雲をぼかして見せる。 */
+body.variant-c {
+  background-image: url("../share-doc/45f68c01-c9d1-40d3-b3ff-6f753d76cb97.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* --- ヘッダーロゴ：主役をグループ名（日本語・大）、サブをイベント名（英字・小）に --- */
+body.variant-c .site-header__logo {
+  font-family: var(--font-sans);  /* 日本語グループ名を読みやすく */
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+body.variant-c .site-header__logo small {
+  font-family: var(--font-en);    /* イベント名は英字フォント */
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+/* フッターは右寄せ・右詰めでコンパクトに */
+body.variant-c .site-footer {
+  text-align: right;
+  padding: 1.8rem clamp(1.5rem, 6vw, 4rem);
+  font-size: 0.7rem;
+}
+/* フッターもヘッダーと同様：グループ名を主役（大）、イベント名をサブ（小） */
+body.variant-c .site-footer__group {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+body.variant-c .site-footer__logo {
+  font-family: var(--font-en);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 0.6rem;
+}
+
+/* --- ヒーロー：縦書きタイトルは右側中央、メタ情報は左下に配置 --- */
+body.variant-c .hero {
+  place-items: stretch;      /* hero__inner をヒーロー全面に広げる */
+}
+body.variant-c .hero__inner {
+  position: relative;        /* 子要素を絶対配置する基準 */
+  width: 100%;
+  min-height: 100svh;
+  padding: 0;
+}
+/* 縦字タイトル：2列を段違いに（2行目を1行目の読点あたりから下げる）。右側中央へ */
+body.variant-c .hero__title {
+  position: absolute;
+  top: 50%;
+  right: clamp(2.5rem, 16vw, 13rem);   /* 右端から離して中央寄りに */
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row-reverse; /* DOM先頭(青空の下で、)を右側へ */
+  align-items: flex-start;
+  gap: 0.15em;
+  margin: 0;
+  /* 縦書きは画面高さに収まる必要があるため、幅(vw)と高さ(vh)の小さい方を基準にする。
+     → 横長（低背）でも文字が縮み、画面高さを超えて折り返さない。 */
+  font-size: clamp(1.8rem, min(7vw, 6.2vh), 4.6rem);
+  max-height: 80svh;           /* 念のため上限。ヘッダーとの重なりも防ぐ */
+}
+/* 各文字ごとに透過高めの青背景を敷く（角は丸めない） */
+body.variant-c .hero__title .ch {
+  display: inline-block;
+  background: rgba(31, 111, 212, 0.32);   /* --sky-deep 系の青・薄め */
+  padding: 0.08em 0.06em;
+  margin-block: 0.05em;                   /* 文字どうしに少し隙間をつくる */
+}
+/* メタ情報（グループ名・英字・日時）：左下・左詰め */
+body.variant-c .hero__meta {
+  position: absolute;
+  left: clamp(1.5rem, 6vw, 4rem);
+  bottom: clamp(7rem, 19vh, 11rem);   /* 左下からやや上げた位置 */
+  display: grid;
+  justify-items: start;      /* 各行を左揃え */
+  gap: 0.45rem;
+  text-align: left;
+}
+body.variant-c .hero__meta > p { margin: 0; }   /* 各行の余白を消して間隔を均一に狭く */
+body.variant-c .hero__title .line {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  line-height: 1.05;
+  margin: 0;
+  white-space: nowrap;       /* 各行は縦1列を維持（高さ不足でも列折り返ししない） */
+}
+body.variant-c .hero__title .line--2 {
+  margin-top: 2.5em;         /* ←「、」の下あたりから開始。段差はこの値で調整 */
+}
+body.variant-c .hero__en { margin-bottom: 0; }
+
+/* --- 開催概要を散らす①：ヒーローの日時 --- */
+.hero__date {
+  margin: 1.6rem 0 0;
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+  letter-spacing: 0.14em;
+  text-shadow: 0 2px 12px rgba(20, 48, 77, 0.45);
+}
+.hero__date .num {
+  font-family: var(--font-en);
+  font-size: 1.3em;
+  letter-spacing: 0.06em;
+}
+.hero__date .dow { font-family: var(--font-en); margin-left: 0.35em; letter-spacing: 0.1em; }
+.hero__date .sep { opacity: 0.6; margin: 0 0.55em; }
+
+/* --- 開催概要を散らす②：コンセプトの場所（info-card で表示） --- */
+.concept__place-wrap {
+  max-width: 360px;
+  margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  text-align: left;          /* カード内は左揃え */
+}
+/* 暗い炭火背景でも白カード内の文字は濃色のまま */
+body.variant-c .concept .info-card { color: var(--ink); }
+
+/* --- 夕暮れルーフトップBBQ写真を背景に（C案）---
+   ビル街に沈む夕日とグリルのシーン。テキストは縦中央に重ねる。 */
+body.variant-c .concept {
+  position: relative;
+  overflow: hidden;
+  color: var(--cloud);
+  background: var(--ink);    /* 画像読込前のフォールバック */
+  min-height: 100svh;        /* 画像を縦に十分見せる */
+  display: grid;
+  align-items: start;        /* テキストを上寄せに */
+}
+.concept__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;  /* 夕日・人・グリルが収まる中央 */
+  z-index: 0;
+}
+body.variant-c .concept::after {  /* 文字可読性のための暗幕（夕景を活かしつつ） */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 48, 77, 0.35) 0%,
+    rgba(20, 48, 77, 0.50) 55%,
+    rgba(20, 48, 77, 0.62) 100%
+  );
+  z-index: 1;
+}
+body.variant-c .concept .container { position: relative; z-index: 2; }
+body.variant-c .concept .concept__copy { text-shadow: 0 4px 20px rgba(20, 48, 77, 0.5); }
+body.variant-c .concept .concept__lead { color: #fff; }
+body.variant-c .concept .eyebrow { color: #fff; }
+
+/* Web（481px以上）：concept をキャッチ=左上／Place・住所ブロック=右下 に振り分ける */
+@media (min-width: 481px) {
+  /* コンテナをセクション高さいっぱいの縦フレックスにして上下に振り分ける */
+  body.variant-c .concept { align-items: stretch; }
+  body.variant-c .concept .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* キャッチコピー：左上・左詰め（コンテナ左端 → セクション左端へ引き出す） */
+  body.variant-c .concept__catch {
+    text-align: left !important;
+    align-self: flex-start;
+    margin-left: calc(50% - 50vw) !important;   /* コンテナ左端 → セクション左端へ */
+    padding-left: clamp(1.5rem, 4vw, 3.5rem);   /* 画面端に張り付かない程度の余白 */
+  }
+
+  /* Place 以降（Place / KAYABACHO DECK / 住所・アクセス）を下端へ押して右詰めに */
+  body.variant-c .concept .eyebrow { margin-top: auto !important; }
+  body.variant-c .concept .eyebrow,
+  body.variant-c .concept__placename,
+  body.variant-c .concept__lead {
+    text-align: right !important;
+    margin-inline: auto calc(50% - 50vw) !important;   /* コンテナ右端 → セクション右端へ */
+    padding-right: clamp(1.5rem, 4vw, 3.5rem);          /* 画面端に張り付かない程度の余白 */
+  }
+
+  /* 住所・アクセス文（〒・住所・最寄駅・地図リンク）を大きく */
+  body.variant-c .concept__access {
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    line-height: 1.9;
+  }
+
+  /* info-card のラベルが小さすぎるので大きく */
+  body.variant-c .info-card__label {
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  }
+}
+
+/* --- CTA(Join us)：背景を透過し、全体背景の入道雲をぼかして見せる --- */
+body.variant-c .cta {
+  background: rgba(20, 48, 77, 0.28);  /* 文字可読性のための薄い暗幕 */
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+}
+body.variant-c .cta::before { display: none; }  /* 旧グラデーション上の雲装飾は無効化 */
+
+/* --- CTA内の開催概要カード（場所・日時・費用） --- */
+.cta__info {
+  position: relative;        /* 雲装飾(::before)より前面へ */
+  z-index: 1;
+  margin: clamp(2rem, 5vw, 3rem) 0 clamp(2.5rem, 6vw, 3.5rem);
+  text-align: left;          /* カード内は左揃え（CTAは中央寄せのため戻す） */
+}
+/* CTAは白文字セクションのため、白カード内の文字は concept の場所カードと同じく濃色へ戻す */
+body.variant-c .cta .info-card { color: var(--ink); }
+/* FEE カードは左詰め（男性／女性と金額を左に並べる・縦並び） */
+body.variant-c .fee-list li { justify-content: flex-start; gap: 1.2em; }
+
+/* =============================================================
+   info-card：3列基調・読みやすさ優先（C案）
+   PCは3列固定。画面が狭くなったら段階的に 2列 → 1列 に折り返す。
+   高さは内容に合わせ、同じ行のカードは自動で高さが揃う（grid stretch）。
+   フォント・余白は共通の .info-card（clamp指定）に任せ、読める大きさを保つ。
+   ============================================================= */
+body.variant-c .cta__info {
+  grid-template-columns: repeat(2, 1fr);   /* resInner01 風：2列 */
+  grid-auto-rows: 1fr;                      /* 全行を同じ高さに → カードサイズ統一 */
+  counter-reset: card;                      /* カード番号 01,02… の採番 */
+}
+/* === CTAカードを resInner01（大和ハウス）風にリデザイン：番号・罫線・フラット2列 === */
+body.variant-c .cta .info-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(20, 48, 77, 0.1);  /* 薄い罫線で囲む */
+  border-radius: 6px;                        /* 角丸は控えめ */
+  box-shadow: none;                          /* 影なしのフラット */
+}
+/* 右上に大きく薄い連番（01,02,03…） */
+body.variant-c .cta .info-card::before {
+  counter-increment: card;
+  content: counter(card, decimal-leading-zero);
+  position: absolute;
+  top: clamp(0.8rem, 2vw, 1.3rem);
+  right: clamp(0.9rem, 2vw, 1.4rem);
+  font-family: var(--font-en);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  color: rgba(20, 48, 77, 0.12);
+  line-height: 1;
+  pointer-events: none;
+}
+/* ラベルは下罫線で区切る小見出しに */
+body.variant-c .cta .info-card__label {
+  border-bottom: 1px solid rgba(20, 48, 77, 0.12);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+@media (max-width: 720px) {
+  body.variant-c .cta__info { grid-template-columns: repeat(2, 1fr); }  /* タブレット：2列 */
+}
+@media (max-width: 460px) {
+  body.variant-c .cta__info { grid-template-columns: 1fr; }             /* スマホ：1列 */
+}
+/* Friend Discount の見出しは小さく1行に収める */
+body.variant-c .discount-head {
+  display: block;
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  white-space: nowrap;
+  margin-bottom: 0.2rem;
+}
+/* note の行間を詰めて、複数行カード（Friend Discount 等）の縦の嵩を抑える */
+body.variant-c .info-card__note { line-height: 1.5; }
+/* Cancel Policy は見出しが無いぶん、本文(note)を大きめに */
+body.variant-c .info-card__note--lg {
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: var(--ink);
+}
+
+/* Cheers（ギャラリー）の背景画像にぼかしを入れる */
+body.variant-c .gallery-panel__img {
+  filter: blur(6px);
+  transform: scale(1.06);   /* ぼかしで生じる縁を隠すため少し拡大 */
+  object-position: 50% 42%; /* 乾杯シーン（上寄り）を中心に */
+}
+/* 縦長（ポートレート）時はスクロール量を短く（200vh → 半分の100vh） */
+@media (orientation: portrait) {
+  body.variant-c .gallery-panel { height: 100vh; }
+}
+/* キャプション「夏に、乾杯しよう。」を改行させず1行に */
+body.variant-c .gallery-panel__caption { max-width: none; }
+body.variant-c .gallery-panel__caption .jp { white-space: nowrap; }
+/* 参加費はカードでなくリード文（テキスト）で表示 */
+body.variant-c .gallery-panel__caption .fee-lead {
+  display: block;
+  margin-top: 1.3rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 12px rgba(20, 48, 77, 0.5);
+}
+
+/* =============================================================
+   スマホ最適化（C案）— 幅480px以下
+   ============================================================= */
+@media (max-width: 480px) {
+  /* ヘッダー：ロゴが長いので縮小・字間を詰め、申込ボタンも小さく */
+  body.variant-c .site-header { padding: 0.8rem 1rem; }
+  body.variant-c .site-header__logo { font-size: 1rem; letter-spacing: 0.03em; }
+  body.variant-c .site-header__logo small { font-size: 0.55rem; letter-spacing: 0.1em; }
+  body.variant-c .btn--header { --btn-pad-y: 0.6em; --btn-pad-x: 1em; font-size: 0.72rem; }
+
+  /* ヒーロー：縦書きタイトルを右端寄り、メタ情報との余白を確保 */
+  body.variant-c .hero__title { right: 1rem; top: 33%; }
+  body.variant-c .hero__meta { left: 1.1rem; bottom: 9rem; top: auto; }
+  body.variant-c .hero__group { letter-spacing: 0.18em; }
+
+  /* Concept：スマホはキャッチを左上、その他（Place/KAYABACHO/住所）を右下に振り分け */
+  body.variant-c .concept { padding-block: 4.5rem 4rem; align-items: stretch; }
+  body.variant-c .concept .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 70svh;
+    text-align: right;
+  }
+  body.variant-c .concept__copy { text-align: right !important; margin-inline: auto 0 !important; }
+  body.variant-c .concept__lead { text-align: right !important; margin-inline: auto 0 !important; font-size: 0.9rem; }
+  body.variant-c .concept__access { font-size: clamp(0.72rem, 1.6vw, 0.92rem); }   /* hero__meta グループ名と同サイズ */
+  body.variant-c .concept .eyebrow { margin-top: auto !important; }   /* Place 以降を下へ押す */
+  /* キャッチコピーだけ左上・左詰め */
+  body.variant-c .concept__catch { text-align: left !important; align-self: flex-start; margin: 0 !important; }
+
+  /* CTA：見出しまわりの余白を詰める */
+  body.variant-c .cta { padding-block: 4rem; }
+  /* 見出しが折り返さないようフォントを画面幅に合わせる */
+  body.variant-c .cta__title { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+}
+
+/* =============================================================
+   モーション控えめ設定の尊重
+   ============================================================= */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .scroll-hint__line { animation: none; }
+  .btn, .btn__arrow { transition: none; }
+}
