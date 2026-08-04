@@ -414,18 +414,31 @@ a{color:inherit;text-decoration:none}
   border-radius:14px;
   text-align:left;
 }
+/* QRは公式・主催者の2枚を並べる */
+.lp-contact__qrs{
+  flex:0 0 auto;
+  display:flex;flex-flow:row wrap;
+  gap:clamp(10px,1.4vw,16px);
+}
 .lp-contact__qr{
   flex:0 0 auto;
-  inline-size:clamp(112px,15vw,144px);
+  inline-size:clamp(100px,12vw,124px);
+}
+.lp-contact__qr img{
+  inline-size:100%;block-size:auto;
+  aspect-ratio:235 / 270;
   padding:10px;
   background:#FAF5EE;
   border-radius:12px;
   /* QRは読み取り精度のため常に明るい下地に置く */
   box-shadow:0 6px 18px rgba(0,0,0,0.18);
 }
-.lp-contact__qr img{
-  inline-size:100%;block-size:auto;
-  aspect-ratio:235 / 270;
+.lp-contact__qr-label{
+  margin-top:8px;
+  font-family:'DM Sans','Zen Kaku Gothic New',sans-serif;
+  font-size:10px;letter-spacing:0.16em;
+  text-align:center;
+  color:rgba(250,245,238,0.7);
 }
 .lp-contact__body{
   flex:1 1 240px;
@@ -449,6 +462,10 @@ a{color:inherit;text-decoration:none}
   font-family:'Zen Kaku Gothic New',sans-serif;
   font-size:12px;line-height:1.8;
   color:rgba(250,245,238,0.75);
+}
+.lp-contact__links{
+  display:flex;flex-flow:row wrap;
+  gap:8px;
 }
 .lp-contact__link{
   display:inline-flex;align-items:center;
@@ -497,6 +514,8 @@ a{color:inherit;text-decoration:none}
   .lp-header__title{font-size:12px}
   .lp-header__cta{padding:8px 16px;font-size:11px}
   /* QRが折り返して縦積みになる幅では中央寄せにする */
-  .lp-contact{flex-direction:column;text-align:center}
-  .lp-contact__qr{inline-size:150px}
+  .lp-contact{flex-direction:column;align-items:center;text-align:center}
+  .lp-contact__qrs{justify-content:center}
+  .lp-contact__qr{inline-size:120px}
+  .lp-contact__links{justify-content:center}
 }
