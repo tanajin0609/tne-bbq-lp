@@ -193,6 +193,19 @@ a{color:inherit;text-decoration:none}
   font-size:clamp(10px,1.1vw,12px);
   color:#64748B;line-height:1.8;
 }
+/* 会場マップ（Google Maps 埋め込み） */
+.lp-place__map{
+  margin-top:clamp(16px,2.2vw,24px);
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid rgba(14,165,233,0.25);
+}
+.lp-place__map iframe{
+  display:block;
+  inline-size:100%;
+  aspect-ratio:16 / 9;
+  border:0;
+}
 
 /* --- Past Event Gallery --- */
 .lp-event-gallery{
@@ -507,6 +520,8 @@ a{color:inherit;text-decoration:none}
 @media(max-width:768px){
   .lp-place{grid-template-columns:1fr}
   .lp-place__photo{min-height:220px}
+  /* 1カラムでは横幅が狭くなるため、マップは縦を厚めに取る */
+  .lp-place__map iframe{aspect-ratio:4 / 3}
   /* .lp-cta__grid は auto-fit のため列数指定は不要 */
 }
 @media(max-width:480px){
